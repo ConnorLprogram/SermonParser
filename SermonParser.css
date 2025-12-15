@@ -1,0 +1,9 @@
+#inputArea {
+    display: flex;
+    padding: 1em;
+}
+
+#outputArea {
+    display: flex;
+    padding: 1em;
+}
