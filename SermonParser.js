@@ -7,7 +7,7 @@ window.onload = function (){
         var inputText = textArea.value;
         var result = inputText.replace(/ +/g, " ");
         result = result.replace(/\n+/g, "\n");
-        result = result.replace(/[^\x00-\x7F]/g, "");
+        result = result.replace(/[^\x00-\x7F\u2013\u2014]/g, "");
         let newSlides = result.match(/\n\s*\w{0,4}\.|\n.*\:/g);
 
         newSlides.forEach(newSlide => {
