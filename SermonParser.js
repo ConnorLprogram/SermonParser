@@ -7,22 +7,35 @@ window.onload = function (){
         var inputText = textArea.value;
         var result = inputText.replace(/ +/g, " ");
         result = result.replace(/\n+/g, "\n");
-        result = result.replace(/[^\x00-\x7F\u2013\u2014]/g, "");
-        let newSlides = result.match(/\n\s*\w{0,4}\.|\n.*\:/g);
+        //result = result.replace(/[^\x00-\x7F\u2013\u2014]/g, "");
+        let verseNums = result.match(/\d[a-zA-Z]/g);
 
-        newSlides.forEach(newSlide => {
-            let delimitedString = newSlide.replace(/\n/g, "\\\\");
-            result = result.replace(newSlide, delimitedString);
-        });
+        if (verseNums){
+            verseNums.forEach(verseNum => {
+                //console.log(verseNum);
+                let splitVerseNum = verseNum[0] + " " + verseNum[1];
+                result = result.replace(verseNum, splitVerseNum);
+            });
+        }
+
+        let newSlides = result.match(/\n\s*\w{0,4}\.|\n.*\:/g);
+        if(newSlides){
+            newSlides.forEach(newSlide => {
+                let delimitedString = newSlide.replace(/\n/g, "\\\\");
+                result = result.replace(newSlide, delimitedString);
+            });
+        }
 
         splitResult = result.split("\\\\");
-        console.log(result);
-        for (var i = 0; i < splitResult.length; i++){
-            var endString = splitResult[i].trim();
-            endString = endString.replace(/\n/, "\n\n");
-            splitResult[i] = endString;
+        //console.log(result);
+        if (splitResult){
+            for (var i = 0; i < splitResult.length; i++){
+                var endString = splitResult[i].trim();
+                endString = endString.replace(/\n/, "\n\n");
+                splitResult[i] = endString;
+            }
+            result = splitResult.join("\\\\");
         }
-        result = splitResult.join("\\\\");
         let curDate = new Date();
         var dateText = (curDate.getMonth() + 1) + "." + curDate.getDate() + "." + curDate.getFullYear();
         outputArea.textContent = dateText + "\n" + result;
