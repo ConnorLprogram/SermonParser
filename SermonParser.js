@@ -26,7 +26,7 @@ window.onload = function (){
             });
         }
 
-        splitResult = result.split("\\\\");
+        /*splitResult = result.split("\\\\");
         //console.log(result);
         if (splitResult){
             for (var i = 0; i < splitResult.length; i++){
@@ -35,7 +35,7 @@ window.onload = function (){
                 splitResult[i] = endString;
             }
             result = splitResult.join("\\\\");
-        }
+        }*/
         let curDate = new Date();
         var dateText = (curDate.getMonth() + 1) + "." + curDate.getDate() + "." + curDate.getFullYear();
         outputArea.textContent = dateText + "\n" + result;
@@ -51,3 +51,4 @@ window.onload = function (){
 
 // verse
 // Point #2
+
