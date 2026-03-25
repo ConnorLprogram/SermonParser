@@ -21,7 +21,7 @@ window.onload = function (){
         let newSlides = result.match(/\n\s*\w{0,4}\.|\n.*\:/g);
         if(newSlides){
             newSlides.forEach(newSlide => {
-                let delimitedString = newSlide.replace(/\n/g, "\\\\");
+                let delimitedString = newSlide.replace(/\n/g, "\\\\\n");
                 result = result.replace(newSlide, delimitedString);
             });
         }
@@ -51,4 +51,3 @@ window.onload = function (){
 
 // verse
 // Point #2
-
