@@ -21,7 +21,7 @@ window.onload = function (){
         let newSlides = result.match(/\n\s*\w{0,4}\.|\n.*\:/g);
         if(newSlides){
             newSlides.forEach(newSlide => {
-                let delimitedString = newSlide.replace(/\n/g, "\\\\\n");
+                let delimitedString = newSlide.replace(/\n/g, "\\\\");
                 result = result.replace(newSlide, delimitedString);
             });
         }
