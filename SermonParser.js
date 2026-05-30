@@ -30,14 +30,16 @@ window.onload = function (){
         let newSlides = result.match(/\n\s*\w{0,4}\.|\n.*\:/g);
         if(newSlides){
             newSlides.forEach(newSlide => {
-                let delimitedString = newSlide.replace(/\n/g, "\\\\\n");
+                let delimitedString = newSlide.replace(/\n/g, "\\\\");
                 result = result.replace(newSlide, delimitedString);
             });
         }
 
         splitResult = result.split("\\\\");
-        // console.log(result);
         if (splitResult){
+            // console.log("Fail");
+            const Puncuation = [".", ",", ";"];
+
             for (var i = 0; i < splitResult.length; i++){
                 var curSlide = splitResult.at(i);
                 var tempCharCount = 0;
@@ -46,7 +48,7 @@ window.onload = function (){
                 var newSlideBreak = [];
                 var lastPeriod = 0;
                 for (var j = 0; j < curSlide.length; j++){
-                    if (curSlide.at(j) == "."){
+                    if (Puncuation.includes(curSlide.at(j))){
                         lastPeriod = j;
                     }
 
@@ -68,7 +70,7 @@ window.onload = function (){
                         if (lastPeriodDifference < RowLength){
                             newSlideBreakIndex = lastPeriod + 1;
                             tempCharCount = lastPeriodDifference
-                            console.log(newSlideBreakIndex);
+                            lastPeriod = -RowLength;
                         }
 
                         newSlideBreak.push(newSlideBreakIndex + (slideBreakCount * 2));
@@ -80,15 +82,18 @@ window.onload = function (){
                 
                 newSlideBreak.slice(0, -1).forEach(slideBreak => {
                     splitResult[i] = splitResult[i].slice(0, slideBreak) + "\\\\" + splitResult[i].slice(slideBreak);
-                    
                 });
 
-                if (tempRowCount > 2){
+                if (newSlideBreak.length > 0 && tempRowCount > 2){
                     splitResult[i] = splitResult[i].slice(0, newSlideBreak.at(-1)) + "\\\\" + splitResult[i].slice(newSlideBreak.at(-1));
                 }
             }
             result = splitResult.join("\\\\");
         }
+        result = result.replace(/\\\\ +/g, "\\\\");
+        result = result.replace(/\\\\*/g, "\\\\");
+        result = result.replace(/\n \\\\/g, "\\\\");
+        result = result.replace(/\\\\\n/g, "\\\\");
         let curDate = new Date();
         var dateText = (curDate.getMonth() + 1) + "." + curDate.getDate() + "." + curDate.getFullYear();
         outputArea.textContent = dateText + "\n" + result;
